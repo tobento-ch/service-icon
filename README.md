@@ -22,6 +22,7 @@ Managing icons for PHP applications.
         - [Stack Icons](#stack-icons)
     - [Example](#example)
         - [Font Awesome](#font-awesome)
+    - [Accessibility](#accessibility)
 - [Credits](#credits)
 ___
 
@@ -155,13 +156,16 @@ $icon = $icon->labelAttr(name: 'class', ['foo']);
 
 **tag**
 
-Returns a new instance of the icon tag.
+Returns a new instance of the icon tag which may be used if you only want to render the SVG.
 
 ```php
 use Tobento\Service\Tag\TagInterface;
 
 var_dump($icon->tag() instanceof TagInterface);
 // bool(true)
+
+$svg = (string)$icon->tag();
+// <svg viewBox="0 0 24 24"><!-- ... --></svg>
 ```
 
 Check out [Tag Interface](https://github.com/tobento-ch/service-tag#tag-interface) to learn more about the interface.
@@ -605,6 +609,34 @@ output:
 </span>
 
 <i class="fa-solid fa-file foo"></i>
+```
+
+## Accessibility
+
+According to the [W3C guide about SVG icon accessibility](https://design-system.w3.org/styles/svg-icons.html#svg-accessibility), there are three methods to improve icons accessibility, depending on the context.
+
+**Informative and functional icons**
+
+They should define a text alternative that presents the same content or function via the ```aria-label``` attribute:
+
+```php
+<?= $icons->get('settings')->attr('aria-label', 'User Settings') ?>
+```
+
+**Decorative icons**
+
+They should be hidden from screen readers using the ```aria-hidden``` attribute.
+
+```php
+<?= $icons->get('decorative')->attr('aria-hidden', 'true') ?>
+```
+
+### Auto aria-hidden
+
+The ```aria-hidden="true"``` attribute is added automatically to SVG icons not having at least one of the following attributes: ```aria-label```, ```aria-labelledby``` or ```title```. If you don't want to set ```aria-hidden="true"``` for specific icons, you can explicitly set the ```aria-hidden``` attribute to ```false```:
+
+```php
+<?= $icons->get('settings')->attr('aria-hidden', 'false') ?>
 ```
 
 # Credits
