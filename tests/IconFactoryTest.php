@@ -87,7 +87,7 @@ class IconFactoryTest extends TestCase
         );
         
         $this->assertSame(
-            '<span class="icon icon-download"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100"><path d="M0,100H100V90H0ZM100,50H66.67V0H33.33V50H0L50,83.33Z"/></svg></span>',
+            '<span class="icon icon-download"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100" aria-hidden="true"><path d="M0,100H100V90H0ZM100,50H66.67V0H33.33V50H0L50,83.33Z"/></svg></span>',
             (string)$icon
         );
     }
@@ -192,12 +192,12 @@ class IconFactoryTest extends TestCase
         );
         
         $this->assertSame(
-            '<span class="icon icon-download"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100"><path d="M0,100H100V90H0ZM100,50H66.67V0H33.33V50H0L50,83.33Z"/></svg></span>',
+            '<span class="icon icon-download"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100" aria-hidden="true"><path d="M0,100H100V90H0ZM100,50H66.67V0H33.33V50H0L50,83.33Z"/></svg></span>',
             (string)$icon
         );
         
         $this->assertSame(
-            '<span class="icon icon-download"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100"><path d="M0,100H100V90H0ZM100,50H66.67V0H33.33V50H0L50,83.33Z"/></svg><span class="icon-label">Download</span></span>',
+            '<span class="icon icon-download"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100" aria-hidden="true"><path d="M0,100H100V90H0ZM100,50H66.67V0H33.33V50H0L50,83.33Z"/></svg><span class="icon-label">Download</span></span>',
             (string)$icon->label('Download')
         );
     }
@@ -220,7 +220,7 @@ class IconFactoryTest extends TestCase
         );
         
         $this->assertSame(
-            '<span class="icon icon-download"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100"><title>edit</title><path d="M80,40L30,90L0,100l10-30l50-50 M90,30l10-10L80,0L70,10L90,30z"/></svg></span>',
+            '<span class="icon icon-download"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100" aria-hidden="true"><title>edit</title><path d="M80,40L30,90L0,100l10-30l50-50 M90,30l10-10L80,0L70,10L90,30z"/></svg></span>',
             (string)$icon
         );
     }
@@ -247,7 +247,7 @@ class IconFactoryTest extends TestCase
         );
         
         $this->assertSame(
-            '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve"><g id="copy"><path d="M72,72V30h28v70H30V72H72z M30,70h40V30V0H0v70H30z"/></g></svg>',
+            '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve" aria-hidden="true"><g id="copy"><path d="M72,72V30h28v70H30V72H72z M30,70h40V30V0H0v70H30z"/></g></svg>',
             (string)$icon->tag()
         );
     }
@@ -270,7 +270,7 @@ class IconFactoryTest extends TestCase
         );
         
         $this->assertSame(
-            '<span class="icon icon-download"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100"><title>edit</title><path d="M80,40L30,90L0,100l10-30l50-50 M90,30l10-10L80,0L70,10L90,30z"/></svg></span>',
+            '<span class="icon icon-download"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100" aria-hidden="true"><title>edit</title><path d="M80,40L30,90L0,100l10-30l50-50 M90,30l10-10L80,0L70,10L90,30z"/></svg></span>',
             (string)$icon
         );
     }    
@@ -286,5 +286,41 @@ class IconFactoryTest extends TestCase
         );
         
         $this->assertInstanceof(IconInterface::class, $icon);        
+    }
+    
+    public function testAriaHiddenIsAutoAdded()
+    {
+        $icon = (new IconFactory())->createIconFromFile(
+            name: 'edit',
+            file: new File(__DIR__.'/svg-icons/edit.svg')
+        );
+        
+        $this->assertSame(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100" aria-hidden="true"><title>edit</title><path d="M80,40L30,90L0,100l10-30l50-50 M90,30l10-10L80,0L70,10L90,30z"/></svg>',
+            (string)$icon->tag()
+        );
+    }
+    
+    public function testAriaHiddenIsNotAutoAdded()
+    {
+        $icon = (new IconFactory())->createIconFromFile(
+            name: 'edit',
+            file: new File(__DIR__.'/svg-icons/edit.svg')
+        );
+        
+        $this->assertSame(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100" aria-label="Label"><title>edit</title><path d="M80,40L30,90L0,100l10-30l50-50 M90,30l10-10L80,0L70,10L90,30z"/></svg>',
+            (string)$icon->tag()->attr('aria-label', 'Label')
+        );
+        
+        $this->assertSame(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100" aria-labelledby="Label"><title>edit</title><path d="M80,40L30,90L0,100l10-30l50-50 M90,30l10-10L80,0L70,10L90,30z"/></svg>',
+            (string)$icon->tag()->attr('aria-labelledby', 'Label')
+        );
+        
+        $this->assertSame(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100" title="Label"><title>edit</title><path d="M80,40L30,90L0,100l10-30l50-50 M90,30l10-10L80,0L70,10L90,30z"/></svg>',
+            (string)$icon->tag()->attr('title', 'Label')
+        );
     }
 }
