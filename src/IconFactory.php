@@ -85,6 +85,10 @@ class IconFactory implements IconFactoryInterface
                 ->class('icon-'.strtolower($name));
         }
         
+        if ($tag->getName() === 'svg') {
+            $tag = $tag->withAttributes(new SvgTagAttributes($tag->attributes()->all()));
+        }
+        
         return new Icon(
             name: $name,
             tag: $tag,
