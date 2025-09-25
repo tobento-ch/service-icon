@@ -104,6 +104,7 @@ class SvgTagFactory extends TagFactory
      */
     protected function namespacesToAttributes(SimpleXMLElement $xml): array
     {
+        /** @var array|false */
         $namespaces = $xml->getDocNamespaces();
         
         if (!is_array($namespaces)) {
