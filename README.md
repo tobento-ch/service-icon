@@ -36,7 +36,7 @@ composer require tobento/service-icon
 
 ## Requirements
 
-- PHP 8.0 or greater
+- PHP 8.4 or greater
 
 ## Highlights
 
@@ -52,7 +52,7 @@ composer require tobento/service-icon
 use Tobento\Service\Icon\IconInterface;
 use Tobento\Service\Icon\IconFactory;
 
-$icon = (new IconFactory())->createIconFromHtml('download', '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100"><path d="M0,100H100V90H0ZM100,50H66.67V0H33.33V50H0L50,83.33Z"/></svg>');
+$icon = new IconFactory()->createIconFromHtml('download', '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100"><path d="M0,100H100V90H0ZM100,50H66.67V0H33.33V50H0L50,83.33Z"/></svg>');
 
 var_dump($icon instanceof IconInterface);
 // bool(true)
