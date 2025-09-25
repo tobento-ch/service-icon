@@ -56,7 +56,7 @@ class SvgFileIconsToJsonFile implements IconsInterface
     public function __construct(
         protected DirsInterface $dirs,
         protected DirInterface $cacheDir,
-        protected bool $clearCache = false,
+        bool $clearCache = false,
         null|IconFactoryInterface $iconFactory = null,
         null|TagFactoryInterface $tagFactory = null,
     ) {
